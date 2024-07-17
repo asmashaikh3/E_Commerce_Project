@@ -22,7 +22,11 @@ ActiveAdmin.register Product do
     column :stock_quantity
     column :category
     column :image do |product|
-      image_tag url_for(product.image) if product.image.attached?
+      if product.image.attached?
+        image_tag url_for(product.image), size: "50x50"
+      else
+        "No Image"
+      end
     end
     actions
   end
