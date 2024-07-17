@@ -1,5 +1,5 @@
 ActiveAdmin.register Product do
-  permit_params :product_name, :description, :price, :stock_quantity, :category_id
+  permit_params :product_name, :description, :price, :stock_quantity, :category_id, :image
 
   form do |f|
     f.inputs do
@@ -8,6 +8,7 @@ ActiveAdmin.register Product do
       f.input :price
       f.input :stock_quantity
       f.input :category
+      f.input :image, as: :file
     end
     f.actions
   end
@@ -20,6 +21,9 @@ ActiveAdmin.register Product do
     column :price
     column :stock_quantity
     column :category
+    column :image do |product|
+      image_tag url_for(product.image) if product.image.attached?
+    end
     actions
   end
 
@@ -30,6 +34,9 @@ ActiveAdmin.register Product do
       row :price
       row :stock_quantity
       row :category
+      row :image do |product|
+        image_tag url_for(product.image) if product.image.attached?
+      end
       row :created_at
       row :updated_at
     end
