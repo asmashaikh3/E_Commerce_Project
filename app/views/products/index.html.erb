@@ -1,2 +1,15 @@
-<h1>Products#index</h1>
-<p>Find me in app/views/products/index.html.erb</p>
+<h1>Our Products</h1>
+<div class="products">
+  <% @products.each do |product| %>
+    <div class="product">
+      <% if product.image.attached? %>
+        <%= link_to image_tag(url_for(product.image), alt: product.product_name, size: "100x100"), product_path(product) %>
+      <% else %>
+        <p>No Image Available</p>
+      <% end %>
+      <h2><%= link_to product.product_name, product_path(product) %></h2>
+      <p><%= product.description %></p>
+      <p><%= number_to_currency(product.price) %></p>
+    </div>
+  <% end %>
+</div>
