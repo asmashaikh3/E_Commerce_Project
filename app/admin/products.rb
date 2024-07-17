@@ -35,4 +35,9 @@ ActiveAdmin.register Product do
     end
     active_admin_comments
   end
+
+  filter :product_name
+  filter :category
+  filter :price
+  filter :created_at
 end
