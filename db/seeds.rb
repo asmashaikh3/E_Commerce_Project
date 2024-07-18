@@ -30,12 +30,16 @@ unless Product.exists?
     { product_name: 'Sour Ale', description: 'A tart and tangy sour ale with fruity notes.', price: 5.49, stock_quantity: 70, category: categories.sample }
   ]
 
-  products.each do |product_data|
+  products.take(5).each do |product_data| # Only attach images to the first 5 products for now
     product = Product.create!(product_data)
     # Attach a random image to the product
-    product.image.attach(
-      io: URI.open('https://picsum.photos/200/300'), 
-      filename: 'random.jpg'
-    )
+    begin
+      image_url = Faker::LoremFlickr.image(size: "200x300", search_terms: ['beer'])
+      file = URI.open(image_url)
+      product.image.attach(io: file, filename: "#{product.product_name.downcase.gsub(' ', '_')}.jpg")
+      puts "Attached image to product: #{product.product_name}"
+    rescue => e
+      puts "Failed to attach image to product: #{product.product_name} - Error: #{e.message}"
+    end
   end
 end
