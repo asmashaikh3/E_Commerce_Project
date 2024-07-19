@@ -15,9 +15,12 @@ end
 # Get all categories
 categories = Category.all
 
-# Create initial products if they don't exist
-unless Product.exists?
-  20.times do
+# Ensure at least 100 products are created
+current_product_count = Product.count
+products_to_create = 100 - current_product_count
+
+if products_to_create > 0
+  products_to_create.times do
     product = Product.create!(
       product_name: Faker::Beer.name,
       description: Faker::Beer.style,
@@ -25,7 +28,7 @@ unless Product.exists?
       stock_quantity: Faker::Number.between(from: 50, to: 200),
       category: categories.sample
     )
-    
+
     # Attach a random image to the product
     begin
       image_url = Faker::LoremFlickr.image(size: "200x300", search_terms: ['beer'])
@@ -36,9 +39,10 @@ unless Product.exists?
       puts "Failed to attach image to product: #{product.product_name} - Error: #{e.message}"
     end
   end
+else
+  puts "Already have 100 or more products in the database."
 end
 
-# Update or create About Us and Contact Us pages
 about_page = Page.find_or_create_by!(title: 'About Us')
 about_page.update(content: <<-HTML
   <h1>About Artisanal Brews Co.</h1>
@@ -72,6 +76,8 @@ contact_page.update(content: <<-HTML
     <li>Twitter: @ArtBrewCo</li>
     <li>Instagram: @ArtisanalBrew</li>
   </ul>
+  
+ 
   
   <p>Thank you for choosing Artisanal Brews Co.!</p>
 HTML
