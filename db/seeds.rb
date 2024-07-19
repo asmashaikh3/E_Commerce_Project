@@ -1,15 +1,6 @@
 require 'faker'
 require 'open-uri'
 
-# Seed initial content for contact and about pages
-Page.find_or_create_by!(title: 'About Us') do |page|
-    page.content = 'This is the about page content. You can update this content from the admin panel.'
-  end
-  
-  Page.find_or_create_by!(title: 'Contact Us') do |page|
-    page.content = 'This is the contact page content. You can update this content from the admin panel.'
-  end
-  
 # Create AdminUser only if it doesn't exist
 if Rails.env.development? && AdminUser.where(email: 'admin@example.com').none?
   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
@@ -45,4 +36,13 @@ unless Product.exists?
       puts "Failed to attach image to product: #{product.product_name} - Error: #{e.message}"
     end
   end
+end
+
+# Create initial content for the About Us and Contact Us pages
+Page.find_or_create_by!(title: 'About Us') do |page|
+  page.content = 'This is the about page content. You can update this content from the admin panel.'
+end
+
+Page.find_or_create_by!(title: 'Contact Us') do |page|
+  page.content = 'This is the contact page content. You can update this content from the admin panel.'
 end

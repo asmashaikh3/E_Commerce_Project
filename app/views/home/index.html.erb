@@ -1,2 +1,14 @@
-<h1>Welcome to Artisanal Brews Co.</h1>
-<p>Your source for specialty craft beers and brewing kits.</p>
+<% image_url = Faker::LoremFlickr.image(size: "800x400", search_terms: ['beer']) %>
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
+  <div class="bg-white p-10 rounded-lg shadow-md">
+    <h1 class="text-4xl font-bold mb-4 text-center">Welcome to Artisanal Brews Co.</h1>
+    <p class="text-lg mb-4 text-center">Your source for specialty craft beers and brewing kits.</p>
+    <img src="<%= image_url %>" alt="Craft Beer" class="rounded-lg shadow-md mb-4">
+    <p class="text-center">
+      At Artisanal Brews Co., we are passionate about brewing the finest craft beers. Whether you're a seasoned brewer or just getting started, we have the perfect brewing kits and ingredients to help you create your own masterpieces.
+    </p>
+    <div class="mt-6 text-center">
+      <a href="/products" class="bg-blue-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-600">Shop Now</a>
+    </div>
+  </div>
+</div>

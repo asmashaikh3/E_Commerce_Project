@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>ArtisanalBrewsCo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Artisanal Brews Co.</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%= stylesheet_link_tag 'application.tailwind', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+</head>
 
-  <body>
+<body>
+  <%= render 'shared/navbar' %>
+
+  <div class="container mx-auto mt-4">
     <%= yield %>
-    <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-  </body>
+  </div>
+</body>
 </html>
