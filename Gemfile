@@ -32,6 +32,9 @@ gem "jbuilder"
 
 gem 'activeadmin'
 
+gem 'autoprefixer-rails'
+
+
 gem 'devise'
 
 gem 'faker'
