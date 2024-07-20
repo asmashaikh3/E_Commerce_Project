@@ -1,6 +1,16 @@
+<h1><%= @product.product_name %></h1>
 <div class="container mx-auto mt-4">
   <h1 class="text-2xl font-bold mb-4"><%= @product.product_name %></h1>
 
+<p><%= @product.description %></p>
+<p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
+<p><strong>Stock Quantity:</strong> <%= @product.stock_quantity %></p>
+
+<% if @product.image.attached? %>
+  <%= image_tag @product.image %>
+<% else %>
+  <p>No image available</p>
+<% end %>
   <div class="bg-white shadow-md rounded-lg overflow-hidden">
     <% if @product.image.attached? %>
       <%= image_tag @product.image, class: 'w-64 h-64 object-contain mx-auto' %>

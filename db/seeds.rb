@@ -1,6 +1,10 @@
 require 'faker'
 require 'open-uri'
 
+# Clear existing data in the right order to avoid foreign key constraints issues
+Product.destroy_all
+Category.destroy_all
+
 # Create AdminUser only if it doesn't exist
 if Rails.env.development? && AdminUser.where(email: 'admin@example.com').none?
   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
@@ -76,8 +80,6 @@ contact_page.update(content: <<-HTML
     <li>Twitter: @ArtBrewCo</li>
     <li>Instagram: @ArtisanalBrew</li>
   </ul>
-  
- 
   
   <p>Thank you for choosing Artisanal Brews Co.!</p>
 HTML

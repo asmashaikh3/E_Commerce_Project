@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get '/pages/about', to: 'pages#show', defaults: { title: 'About Us' }
 
   resources :products, only: [:index, :show]
+  resources :categories, only: [:index, :show]
 end
