@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'categories/show'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -8,5 +9,5 @@ Rails.application.routes.draw do
   get '/pages/about', to: 'pages#show', defaults: { title: 'About Us' }
 
   resources :products, only: [:index, :show]
-  resources :categories, only: [:index, :show]
+  resources :categories, only: [:show]
 end
