@@ -6,6 +6,9 @@ gem 'tailwindcss-rails'
 
 gem 'kaminari'
 
+gem 'nokogiri'
+gem 'httparty'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3", ">= 7.1.3.4"
 

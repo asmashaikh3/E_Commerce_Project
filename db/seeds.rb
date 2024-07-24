@@ -1,10 +1,6 @@
 require 'faker'
 require 'open-uri'
 
-# Clear existing data in the right order to avoid foreign key constraints issues
-Product.destroy_all
-Category.destroy_all
-
 # Create AdminUser only if it doesn't exist
 if Rails.env.development? && AdminUser.where(email: 'admin@example.com').none?
   AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
@@ -19,9 +15,9 @@ end
 # Get all categories
 categories = Category.all
 
-# Ensure at least 100 products are created
+# Ensure at least 300 products are created
 current_product_count = Product.count
-products_to_create = 100 - current_product_count
+products_to_create = 300 - current_product_count
 
 if products_to_create > 0
   products_to_create.times do
@@ -44,7 +40,7 @@ if products_to_create > 0
     end
   end
 else
-  puts "Already have 100 or more products in the database."
+  puts "Already have 300 or more products in the database."
 end
 
 about_page = Page.find_or_create_by!(title: 'About Us')

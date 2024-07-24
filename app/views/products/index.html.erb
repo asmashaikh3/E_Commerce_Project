@@ -5,12 +5,15 @@
       <div class="flex space-x-4">
         <%= text_field_tag :search, params[:search], placeholder: "Search products...", class: "border rounded p-2 w-full" %>
         <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :category_name, params[:category_id]), include_blank: "All Categories", class: "border rounded p-2" %>
+        <%= select_tag :filter, options_for_select([['On Sale', 'on_sale'], ['New Arrivals', 'new'], ['Recently Updated', 'recently_updated']], params[:filter]), include_blank: "No Filter", class: "border rounded p-2" %>
         <%= submit_tag "Search", class: "bg-blue-500 text-white px-4 py-2 rounded" %>
       </div>
     <% end %>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% if @products.any? %>
+    <% if @products.empty? %>
+      <p class="text-center text-gray-500">No matching products found.</p>
+    <% else %>
       <% @products.each do |product| %>
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
           <% if product.image.attached? %>
@@ -25,8 +28,6 @@
           </div>
         </div>
       <% end %>
-    <% else %>
-      <p class="text-center text-gray-500">No matching products found.</p>
     <% end %>
   </div>
 </div>
