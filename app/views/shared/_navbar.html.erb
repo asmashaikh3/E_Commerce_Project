@@ -6,10 +6,10 @@
       <a class="text-gray-300 hover:text-white" href="/pages/contact">Contact Us</a>
       <a class="text-gray-300 hover:text-white" href="/pages/about">About Us</a>
       <a class="text-gray-300 hover:text-white" href="/products">Products</a>
+      <a class="text-gray-300 hover:text-white" href="/cart">My Cart</a>
       <% Category.all.each do |category| %>
         <a class="text-gray-300 hover:text-white" href="<%= category_path(category) %>"><%= category.category_name %></a>
       <% end %>
-      <a class="text-gray-300 hover:text-white" href="/cart">My Cart</a>
     </div>
   </div>
 </nav>
