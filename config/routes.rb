@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  devise_for :users
+
   root to: 'home#index'
   
   get '/pages/contact', to: 'pages#show', defaults: { title: 'Contact Us' }
@@ -13,7 +15,7 @@ Rails.application.routes.draw do
   resources :categories, only: [:show]
   resource :cart, only: [:show] do
     post 'add/:product_id', to: 'carts#add', as: 'add_to'
-    delete 'remove/:product_id', to: 'carts#remove', as: 'remove_from'
-    delete 'clear', to: 'carts#clear', as: 'clear'
+    patch 'update/:product_id', to: 'carts#update', as: 'update_item'
+    delete 'remove/:product_id', to: 'carts#remove', as: 'remove_item'
   end
 end
