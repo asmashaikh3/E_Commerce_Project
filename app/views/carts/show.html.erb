@@ -1,15 +1,24 @@
-<h1>Your Shopping Cart</h1>
+<div class="container mx-auto mt-4">
+  <h1 class="text-2xl font-bold mb-4">Your Shopping Cart</h1>
 
-<% if @cart.items.empty? %>
-  <p>Your cart is empty.</p>
-<% else %>
-  <ul>
-    <% @cart.products.each do |product| %>
-      <li class="mb-2">
-        <%= product.product_name %> - <%= number_to_currency(product.price) %>
-        <%= link_to 'Remove', remove_from_cart_path(product), method: :delete, class: "bg-red-500 text-white px-2 py-1 rounded ml-2" %>
-      </li>
-    <% end %>
-  </ul>
-  <%= link_to 'Clear Cart', clear_cart_path, method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded mt-4" %>
-<% end %>
+  <% if @cart.items.empty? %>
+    <p class="text-center text-gray-500">Your cart is empty.</p>
+  <% else %>
+    <ul class="bg-white shadow-md rounded-lg p-4">
+      <% @cart.products.each do |product| %>
+        <li class="flex justify-between items-center border-b border-gray-200 py-2">
+          <div>
+            <p class="font-bold text-gray-700"><%= product.product_name %></p>
+            <p class="text-gray-500"><%= number_to_currency(product.price) %></p>
+          </div>
+          <div>
+            <%= link_to 'Remove', remove_from_cart_path(product), method: :delete, class: "bg-red-500 text-white px-3 py-1 rounded" %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <div class="mt-4">
+      <%= link_to 'Clear Cart', clear_cart_path, method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded" %>
+    </div>
+  <% end %>
+</div>
