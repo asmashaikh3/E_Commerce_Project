@@ -14,6 +14,20 @@ ActiveAdmin.register Product do
     f.actions
   end
 
+  index do
+    selectable_column
+    id_column
+    column :product_name
+    column :description
+    column :price
+    column :stock_quantity
+    column :category
+    column :on_sale
+    column :created_at
+    column :updated_at
+    actions
+  end
+
   filter :product_name
   filter :description
   filter :price

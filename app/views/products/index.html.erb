@@ -25,10 +25,12 @@
             <h2 class="text-lg font-semibold"><%= link_to product.product_name, product_path(product) %></h2>
             <p class="text-gray-700"><%= product.description %></p>
             <p class="text-green-600 font-bold">$<%= product.price %></p>
-            <%= link_to 'Add to Cart', add_to_cart_path(product), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block" %>
           </div>
         </div>
       <% end %>
     <% end %>
+  </div>
+  <div class="mt-6">
+    <%= paginate @products %>
   </div>
 </div>

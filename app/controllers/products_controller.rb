@@ -1,27 +1,27 @@
 class ProductsController < ApplicationController
   def index
     @categories = Category.all
-
-    if params[:category_id].present?
-      @products = Product.where(category_id: params[:category_id])
-    else
-      @products = Product.all
-    end
+    @products = Product.all
 
     if params[:search].present?
-      @products = @products.where("product_name LIKE ? OR description LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+      @products = @products.where("product_name LIKE ?", "%#{params[:search]}%")
+    end
+
+    if params[:category_id].present?
+      @products = @products.where(category_id: params[:category_id])
     end
 
     if params[:filter].present?
-      case params[:filter]
-      when 'on_sale'
+      if params[:filter] == 'on_sale'
         @products = @products.where(on_sale: true)
-      when 'new'
-        @products = @products.where('created_at >= ?', 3.days.ago)
-      when 'recently_updated'
-        @products = @products.where('updated_at >= ?', 3.days.ago).where('created_at < ?', 3.days.ago)
+      elsif params[:filter] == 'new'
+        @products = @products.order(created_at: :desc)
+      elsif params[:filter] == 'recently_updated'
+        @products = @products.order(updated_at: :desc)
       end
     end
+
+    @products = @products.page(params[:page]).per(10)
   end
 
   def show
