@@ -10,6 +10,12 @@ class CartsController < ApplicationController
     redirect_to cart_path
   end
 
+  def update
+    @cart = Cart.new(session)
+    @cart.update_product(params[:product_id], params[:quantity].to_i)
+    redirect_to cart_path
+  end
+
   def remove
     product = Product.find(params[:product_id])
     @cart = Cart.new(session)
