@@ -1,15 +1,14 @@
 class Cart
   attr_reader :items
 
-  def initialize(session)
-    @session = session
-    @items = session[:cart] || {}
+  def initialize(session_cart)
+    @items = session_cart || {}
   end
 
   def add_product(product_id)
-    @items[product_id.to_s] ||= 0
-    @items[product_id.to_s] += 1
-    @session[:cart] = @items
+    product_id = product_id.to_s
+    @items[product_id] ||= 0
+    @items[product_id] += 1
   end
 
   def update_product(product_id, quantity)

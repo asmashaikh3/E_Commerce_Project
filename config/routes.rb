@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'carts/show'
-  get 'categories/show'
   devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users
   ActiveAdmin.routes(self)
@@ -18,5 +16,4 @@ Rails.application.routes.draw do
     delete 'remove/:product_id', to: 'carts#remove', as: 'remove_item'
     delete 'clear', to: 'carts#clear', as: 'clear'
   end
-  
 end
