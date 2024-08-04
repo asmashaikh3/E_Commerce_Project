@@ -29,6 +29,11 @@ if products_to_create > 0
       category: categories.sample
     )
 
+    #tax calculation
+    Province.create(name: 'Manitoba', pst: 7, gst: 5, hst: 0)
+    Province.create(name: 'Ontario', pst: 0, gst: 5, hst: 13)
+    Province.create(name: 'Quebec', pst: 0, gst: 5, hst: 0, qst: 9.975)
+
     # Attach a random image to the product
     begin
       image_url = Faker::LoremFlickr.image(size: "200x300", search_terms: ['beer'])

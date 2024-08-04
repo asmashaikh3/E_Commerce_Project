@@ -1,0 +1,14 @@
+<h1>Order Details</h1>
+
+<p>
+  Order Date: <%= @order.created_at.strftime("%B %d, %Y") %><br>
+  Total Amount: <%= number_to_currency(@order.total_amount) %><br>
+  Status: <%= @order.status.capitalize %>
+</p>
+
+<h2>Items:</h2>
+<ul>
+  <% @order.order_items.each do |item| %>
+    <li><%= item.product.product_name %> - <%= number_to_currency(item.price) %> (Quantity: <%= item.quantity %>)</li>
+  <% end %>
+</ul>

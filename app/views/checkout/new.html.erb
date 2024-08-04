@@ -1,0 +1,12 @@
+<h2>Checkout</h2>
+
+<%= form_with model: @order, url: checkout_index_path, method: :post do |form| %>
+  <div>
+    <%= form.label :total_amount %>
+    <% cart_total = @cart.sum { |product_id, quantity| Product.find(product_id).price * quantity } %>
+    <%= form.text_field :total_amount, value: number_to_currency(cart_total), readonly: true %>
+  </div>
+  <div>
+    <%= form.submit "Place Order", class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+  </div>
+<% end %>

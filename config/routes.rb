@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show]
   resources :categories, only: [:show]
+
+  resources :checkout, only: [:new, :create, :index]
+  
   resource :cart, only: [:show] do
     post 'add/:product_id', to: 'carts#add', as: 'add_to'
     patch 'update/:product_id', to: 'carts#update', as: 'update_item'
