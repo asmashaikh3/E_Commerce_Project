@@ -1,0 +1,27 @@
+<h1>Order Details</h1>
+
+<p><strong>Order ID:</strong> <%= @order.id %></p>
+<p><strong>Status:</strong> <%= @order.status %></p>
+<p><strong>Total Amount:</strong> <%= number_to_currency(@order.total_amount) %></p>
+
+<h2>Order Items</h2>
+<table class="table-auto w-full border-collapse">
+  <thead>
+    <tr class="bg-gray-200">
+      <th class="border px-4 py-2">Product</th>
+      <th class="border px-4 py-2">Quantity</th>
+      <th class="border px-4 py-2">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_items.each do |item| %>
+      <tr>
+        <td class="border px-4 py-2"><%= item.product.product_name %></td>
+        <td class="border px-4 py-2"><%= item.quantity %></td>
+        <td class="border px-4 py-2"><%= number_to_currency(item.price * item.quantity) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back to Orders', orders_path, class: "text-blue-500 hover:underline" %>

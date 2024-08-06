@@ -29,6 +29,16 @@ if products_to_create > 0
       category: categories.sample
     )
 
+    #tax calculation
+    # In db/seeds.rb
+Province.create(name: 'Manitoba', pst: 7, gst: 5, hst: 0, qst: 0)
+Province.create(name: 'Ontario', pst: 0, gst: 5, hst: 13, qst: 0)
+Province.create(name: 'Quebec', pst: 9.975, gst: 5, hst: 0, qst: 9.975)
+Province.create(name: 'British Columbia', pst: 7, gst: 5, hst: 0, qst: 0)
+Province.create(name: 'Alberta', pst: 0, gst: 5, hst: 0, qst: 0)
+Province.create(name: 'Saskatchewan', pst: 6, gst: 5, hst: 0, qst: 0)
+
+
     # Attach a random image to the product
     begin
       image_url = Faker::LoremFlickr.image(size: "200x300", search_terms: ['beer'])

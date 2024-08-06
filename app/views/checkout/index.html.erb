@@ -1,0 +1,28 @@
+<h1>My Orders</h1>
+
+<% if @orders.any? %>
+  <table class="table-auto w-full border-collapse">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="px-4 py-2">Order ID</th>
+        <th class="px-4 py-2">Total Amount</th>
+        <th class="px-4 py-2">Status</th>
+        <th class="px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td class="border px-4 py-2"><%= order.id %></td>
+          <td class="border px-4 py-2"><%= number_to_currency(order.total_amount) %></td>
+          <td class="border px-4 py-2"><%= order.status.capitalize %></td>
+          <td class="border px-4 py-2">
+  <%= link_to 'View Order', order_path(order), class: "text-blue-500 hover:underline" %>
+</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No orders found.</p>
+<% end %>

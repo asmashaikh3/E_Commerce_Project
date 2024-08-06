@@ -1,0 +1,43 @@
+<h1>Invoice</h1>
+
+<%= form_with model: @order, url: checkout_index_path, method: :post, local: true do |f| %>
+  <table class="w-full text-left">
+    <thead>
+      <tr>
+        <th class="border-b p-2">Product</th>
+        <th class="border-b p-2">Quantity</th>
+        <th class="border-b p-2">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @cart.present? %>
+        <% @cart.each do |product_id, quantity| %>
+          <% product = Product.find(product_id) %>
+          <tr>
+            <td class="border-b p-2"><%= product.product_name %></td>
+            <td class="border-b p-2"><%= quantity %></td>
+            <td class="border-b p-2"><%= number_to_currency(product.price * quantity) %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="3" class="text-center">Your cart is empty.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div>
+    <%= f.label :address, "Shipping Address" %>
+    <%= f.text_area :address, value: current_user.address || "" %>
+  </div>
+
+  <div>
+    <%= f.label :province_id, "Province" %>
+    <%= f.collection_select :province_id, Province.all, :id, :name, selected: current_user.province_id %>
+  </div>
+
+  <div>
+    <%= f.submit "Place Order", class: "bg-green-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-600 transition duration-200" %>
+  </div>
+<% end %>

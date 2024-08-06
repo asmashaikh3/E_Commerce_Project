@@ -3,6 +3,7 @@ class CartsController < ApplicationController
     @cart = session[:cart] || {}
   end
 
+  
   def add
     product_id = params[:product_id].to_s
     quantity = (params[:quantity] || 1).to_i
