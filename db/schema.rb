@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.1].define(version: 2024_08_04_191310) do
+=======
+ActiveRecord::Schema[7.1].define(version: 2024_08_03_232447) do
+>>>>>>> dd15788b71666d8dcb0e94ad6f6e23a297663825
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -101,8 +105,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_04_191310) do
     t.decimal "subtotal_amount", precision: 10, scale: 2
     t.decimal "taxes", precision: 10, scale: 2
     t.decimal "total_amount", precision: 10, scale: 2
-    t.string "address"
-    t.integer "province_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

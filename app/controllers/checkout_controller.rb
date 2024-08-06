@@ -1,5 +1,5 @@
 class CheckoutController < ApplicationController
-  before_action :authenticate_user! # Ensure the user is logged in before checking out
+  before_action :authenticate_user! 
 
   def new
     @cart = session[:cart] || {}
@@ -30,31 +30,32 @@ class CheckoutController < ApplicationController
     @orders = current_user.orders
   end
 
-  private
+  def new
+    @order = current_user.orders.build
+    @cart_total = calculate_cart_total
+  end
 
-  def calculate_cart_total
-    session[:cart].sum do |product_id, quantity|
-      product = Product.find(product_id)
-      product.price * quantity
+  def create
+    @order = current_user.orders.build(order_params)
+    @order.calculate_taxes
+    if @order.save
+      redirect_to order_confirmation_path(@order), notice: 'Order placed successfully'
+    else
+      render :new
     end
   end
 
-  def calculate_taxes(subtotal)
-    province = Province.find_by(id: current_user.province_id)
-  
-    if province
-      gst = subtotal * (province.gst / 100.0)
-      pst = subtotal * (province.pst / 100.0)
-      hst = subtotal * (province.hst / 100.0)
-      qst = subtotal * (province.qst / 100.0)
-  
-      gst + pst + hst + qst
-    else
-      0
-    end
+  private
+
+  def initialize_cart
+    @cart = session[:cart] || {}
+  end
+
+  def calculate_cart_total
+    @cart.sum { |product_id, quantity| Product.find(product_id).price * quantity } || 0
   end
 
   def order_params
-    params.require(:order).permit(:address, :province_id)
+    params.require(:order).permit(:total_amount, :status, order_items_attributes: [:product_id, :quantity, :price])
   end
 end

@@ -9,4 +9,8 @@ class OrdersController < ApplicationController
       @orders = current_user.orders
     end
   end
-  
+
+  def show
+    @order = current_user.orders.find(params[:id])
+  end
+end
