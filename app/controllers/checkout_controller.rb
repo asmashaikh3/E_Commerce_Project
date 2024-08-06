@@ -1,8 +1,8 @@
 class CheckoutController < ApplicationController
-  before_action :authenticate_user! 
+  before_action :authenticate_user!
+  before_action :initialize_cart, only: [:new, :create]
 
   def new
-    @cart = session[:cart] || {}
     @order = current_user.orders.build
     @subtotal = calculate_cart_total
     @taxes = calculate_taxes(@subtotal)
@@ -10,9 +10,8 @@ class CheckoutController < ApplicationController
   end
 
   def create
-    @cart = session[:cart] || {}
     @order = current_user.orders.build(order_params)
-    @order.order_items = session[:cart].map do |product_id, quantity|
+    @order.order_items = @cart.map do |product_id, quantity|
       product = Product.find(product_id)
       OrderItem.new(product: product, quantity: quantity, price: product.price)
     end
@@ -26,25 +25,6 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def index
-    @orders = current_user.orders
-  end
-
-  def new
-    @order = current_user.orders.build
-    @cart_total = calculate_cart_total
-  end
-
-  def create
-    @order = current_user.orders.build(order_params)
-    @order.calculate_taxes
-    if @order.save
-      redirect_to order_confirmation_path(@order), notice: 'Order placed successfully'
-    else
-      render :new
-    end
-  end
-
   private
 
   def initialize_cart
@@ -52,10 +32,26 @@ class CheckoutController < ApplicationController
   end
 
   def calculate_cart_total
-    @cart.sum { |product_id, quantity| Product.find(product_id).price * quantity } || 0
+    return 0 unless @cart.present?
+    @cart.sum { |product_id, quantity| Product.find(product_id).price * quantity }
+  end
+
+  def calculate_taxes(subtotal)
+    province = Province.find_by(id: current_user.province_id)
+  
+    if province
+      gst = subtotal * (province.gst / 100.0)
+      pst = subtotal * (province.pst / 100.0)
+      hst = subtotal * (province.hst / 100.0)
+      qst = subtotal * (province.qst / 100.0)
+  
+      gst + pst + hst + qst
+    else
+      0
+    end
   end
 
   def order_params
-    params.require(:order).permit(:total_amount, :status, order_items_attributes: [:product_id, :quantity, :price])
+    params.require(:order).permit(:address, :province_id)
   end
 end
